@@ -1,4 +1,4 @@
-state,district,crop,modal_price,N,P,K,temperature,humidity,ph,rainfall,season
+state,city,crop,modal_price,N,P,K,temperature,humidity,ph,rainfall,season
 Andaman_and_Nicobar,South_Andaman,coconut,5600,21.98,16.93,30.59,27.41,94.84,5.98,175.69,Whole_Year
 Assam,Cachar,rice,2400,79.89,47.58,39.87,23.69,82.27,6.43,236.18,Kharif
 Assam,Cachar,rice,2800,79.89,47.58,39.87,23.69,82.27,6.43,236.18,Kharif
@@ -334,8 +334,8 @@ West_Bengal,Nadia,jute,4300,78.4,46.86,39.99,24.96,79.64,6.73,174.79,Kharif
 West_Bengal,Nadia,rice,3800,79.89,47.58,39.87,23.69,82.27,6.43,236.18,Kharif
 West_Bengal,Puruliya,rice,2640,79.89,47.58,39.87,23.69,82.27,6.43,236.18,Kharif
 West_Bengal,Puruliya,rice,2600,79.89,47.58,39.87,23.69,82.27,6.43,236.18,Kharif
-West_Bengal,Sounth_24_Parganas,rice,2800,79.89,47.58,39.87,23.69,82.27,6.43,236.18,Kharif
-West_Bengal,Sounth_24_Parganas,rice,4400,79.89,47.58,39.87,23.69,82.27,6.43,236.18,Kharif
+West_Bengal,South_24_Parganas,rice,2800,79.89,47.58,39.87,23.69,82.27,6.43,236.18,Kharif
+West_Bengal,South_24_Parganas,rice,4400,79.89,47.58,39.87,23.69,82.27,6.43,236.18,Kharif
 West_Bengal,Uttar_Dinajpur,jute,4600,78.4,46.86,39.99,24.96,79.64,6.73,174.79,Kharif
 West_Bengal,Uttar_Dinajpur,rice,3600,79.89,47.58,39.87,23.69,82.27,6.43,236.18,Kharif
 West_Bengal,Uttar_Dinajpur,jute,4500,78.4,46.86,39.99,24.96,79.64,6.73,174.79,Kharif
