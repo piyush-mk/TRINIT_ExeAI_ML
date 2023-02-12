@@ -10,6 +10,16 @@ st.set_page_config(
     layout="centered",
     initial_sidebar_state="collapsed",
 )
+#remove the hyperlink  
+def hide_anchor_link():
+    st.markdown("""
+        <style>
+        .css-15zrgzn {display: none}
+        </style>
+        """, unsafe_allow_html=True)
+
+
+hide_anchor_link()
 
 def crop_recommendation_model(city,season,nitrogen,phosphorus,potassium,ph):
     df2=pd.read_csv('Final_Clean_Dataset/crop.csv')
@@ -92,7 +102,12 @@ def crop_recommendation_model(city,season,nitrogen,phosphorus,potassium,ph):
 
 st.title("DataGrow")
 st.markdown("## Making data grow and helping farmers grow")
-st.markdown("### A data science project by ExeAI")
+
+#format this text to appear in yellow color
+st.markdown("<span style='color:yellow'> Just Select you location and season and we will tell you the best crop to grow according to your soil and climate conditions </span>",unsafe_allow_html=True)
+
+
+st.markdown("##### A data science project by ExeAI")
 
 #streamlit dropdown button for selecting the state and then city from dataset
 df = pd.read_csv("Final_Clean_Dataset/crop.csv")
@@ -105,7 +120,6 @@ state = st.selectbox('Select State', list(df1.keys()))
 #make cities unique
 df1[state] = list(set(df1[state]))
 city = st.selectbox('Select City', df1[state])
-city = city.lower()
 
 
 
@@ -122,15 +136,38 @@ if state and city:
         ph=st.slider('ph', 4, 10, 7)
 
 if st.button('Get Crop Recommendation',key='crp'):
-    st.markdown("### You selected {} in {} in {} Season".format(city,state,season))
+    #replace _ with space in city name
+    city=city.replace('_',' ')
+    state=state.replace('_',' ')
+    season=season.replace('_',' ')
+    st.text("")
+    st.text("")
+    st.markdown("### You selected <span style='color:yellow'>{}</span> in <span style='color:yellow'>{}</span> in <span style='color:yellow'>{}</span> Season".format(city,state,season),unsafe_allow_html=True)
     #round the values of nitrogen, phosphorus, pottasium and ph
     nitrogen=round(nitrogen,2)
     phosphorus=round(phosphorus,2)
     pottasium=round(pottasium,2)
     ph=round(ph,2)
-    st.markdown("### Your soil has Nitrogen: {}, Phosphorus: {}, Pottasium: {}, PH: {}".format(nitrogen,phosphorus,pottasium,ph))
+    st.text("")
+    st.text("")
+    st.markdown("### Your soil has <span style='color:yellow'>Nitrogen</span>: {}, <span style='color:yellow'>Phosphorus</span>: {}, <span style='color:yellow'>Pottasium</span>: {}, <span style='color:yellow'>ph</span>: {}".format(nitrogen,phosphorus,pottasium,ph),unsafe_allow_html=True)
+    st.text("")
+    st.text("")
     st.markdown("### Your recommended crops are: ")
+    city = city.replace(' ','_')
+    state = state.replace(' ','_')
+    season = season.replace(' ','_')
+    city = city.lower()
     df4=crop_recommendation_model(city,season,nitrogen,phosphorus,pottasium,ph)
+    
+    hide_table_row_index = """
+            <style>
+            thead tr th:first-child {display:none}
+            tbody th {display:none}
+            </style>
+            """
+    st.markdown(hide_table_row_index, unsafe_allow_html=True)
+
     st.table(df4)
     
     
