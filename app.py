@@ -98,76 +98,75 @@ def crop_recommendation_model(city,season,nitrogen,phosphorus,potassium,ph):
     return df2
 
 
+def page():
+        st.title("DataGrow")
+        st.markdown("## Making data grow and helping farmers grow")
+
+        #format this text to appear in yellow color
+        st.markdown("<span style='color:yellow'> Just Select you location and season and we will tell you the best crop to grow according to your soil and climate conditions </span>",unsafe_allow_html=True)
 
 
-st.title("DataGrow")
-st.markdown("## Making data grow and helping farmers grow")
+        st.markdown("##### A data science project by ExeAI")
 
-#format this text to appear in yellow color
-st.markdown("<span style='color:yellow'> Just Select you location and season and we will tell you the best crop to grow according to your soil and climate conditions </span>",unsafe_allow_html=True)
+        #streamlit dropdown button for selecting the state and then city from dataset
+        df = pd.read_csv("Final_Clean_Dataset/crop.csv")
 
+        #dictionary for state and corresponding cities by filtering cities from dataset
+        df1 = df.groupby('state')['city'].apply(list).to_dict()
+        df1 = {k: v for k, v in sorted(df1.items(), key=lambda item: item[0])}
 
-st.markdown("##### A data science project by ExeAI")
-
-#streamlit dropdown button for selecting the state and then city from dataset
-df = pd.read_csv("Final_Clean_Dataset/crop.csv")
-
-#dictionary for state and corresponding cities by filtering cities from dataset
-df1 = df.groupby('state')['city'].apply(list).to_dict()
-df1 = {k: v for k, v in sorted(df1.items(), key=lambda item: item[0])}
-
-state = st.selectbox('Select State', list(df1.keys()))
-#make cities unique
-df1[state] = list(set(df1[state]))
-city = st.selectbox('Select City', df1[state])
-
-
+        state = st.selectbox('Select State', list(df1.keys()))
+        #make cities unique
+        df1[state] = list(set(df1[state]))
+        city = st.selectbox('Select City', df1[state])
 
 
 
-#after selecting state and city, display the options to enter season
 
-if state and city:
-    season = st.selectbox('Select Season', df['season'].unique())
-    if season:
-        nitrogen=st.slider('Nitrogen', 10, 150, 75)
-        phosphorus=st.slider('Phosphorus', 10, 150, 50)
-        pottasium=st.slider('Pottasium', 10, 150, 75)
-        ph=st.slider('ph', 4, 10, 7)
 
-if st.button('Get Crop Recommendation',key='crp'):
-    #replace _ with space in city name
-    city=city.replace('_',' ')
-    state=state.replace('_',' ')
-    season=season.replace('_',' ')
-    st.text("")
-    st.text("")
-    st.markdown("### You selected <span style='color:yellow'>{}</span> in <span style='color:yellow'>{}</span> in <span style='color:yellow'>{}</span> Season".format(city,state,season),unsafe_allow_html=True)
-    #round the values of nitrogen, phosphorus, pottasium and ph
-    nitrogen=round(nitrogen,2)
-    phosphorus=round(phosphorus,2)
-    pottasium=round(pottasium,2)
-    ph=round(ph,2)
-    st.text("")
-    st.text("")
-    st.markdown("### Your soil has <span style='color:yellow'>Nitrogen</span>: {}, <span style='color:yellow'>Phosphorus</span>: {}, <span style='color:yellow'>Pottasium</span>: {}, <span style='color:yellow'>ph</span>: {}".format(nitrogen,phosphorus,pottasium,ph),unsafe_allow_html=True)
-    st.text("")
-    st.text("")
-    st.markdown("### Your recommended crops are: ")
-    city = city.replace(' ','_')
-    state = state.replace(' ','_')
-    season = season.replace(' ','_')
-    city = city.lower()
-    df4=crop_recommendation_model(city,season,nitrogen,phosphorus,pottasium,ph)
+        #after selecting state and city, display the options to enter season
+
+        if state and city:
+            season = st.selectbox('Select Season', df['season'].unique())
+            if season:
+                nitrogen=st.slider('Nitrogen', 10, 150, 75)
+                phosphorus=st.slider('Phosphorus', 10, 150, 50)
+                pottasium=st.slider('Pottasium', 10, 150, 75)
+                ph=st.slider('ph', 4, 10, 7)
+
+        if st.button('Get Crop Recommendation',key='crp'):
+            #replace _ with space in city name
+            city=city.replace('_',' ')
+            state=state.replace('_',' ')
+            season=season.replace('_',' ')
+            st.text("")
+            st.text("")
+            st.markdown("### You selected <span style='color:yellow'>{}</span> in <span style='color:yellow'>{}</span> in <span style='color:yellow'>{}</span> Season".format(city,state,season),unsafe_allow_html=True)
+            #round the values of nitrogen, phosphorus, pottasium and ph
+            nitrogen=round(nitrogen,2)
+            phosphorus=round(phosphorus,2)
+            pottasium=round(pottasium,2)
+            ph=round(ph,2)
+            st.text("")
+            st.text("")
+            st.markdown("### Your soil has <span style='color:yellow'>Nitrogen</span>: {}, <span style='color:yellow'>Phosphorus</span>: {}, <span style='color:yellow'>Pottasium</span>: {}, <span style='color:yellow'>ph</span>: {}".format(nitrogen,phosphorus,pottasium,ph),unsafe_allow_html=True)
+            st.text("")
+            st.text("")
+            st.markdown("### Your recommended crops are: ")
+            city = city.replace(' ','_')
+            state = state.replace(' ','_')
+            season = season.replace(' ','_')
+            city = city.lower()
+            df4=crop_recommendation_model(city,season,nitrogen,phosphorus,pottasium,ph)
+            
+            hide_table_row_index = """
+                    <style>
+                    thead tr th:first-child {display:none}
+                    tbody th {display:none}
+                    </style>
+                    """
+            st.markdown(hide_table_row_index, unsafe_allow_html=True)
+
+            st.table(df4)
     
-    hide_table_row_index = """
-            <style>
-            thead tr th:first-child {display:none}
-            tbody th {display:none}
-            </style>
-            """
-    st.markdown(hide_table_row_index, unsafe_allow_html=True)
-
-    st.table(df4)
-    
-    
+page()
