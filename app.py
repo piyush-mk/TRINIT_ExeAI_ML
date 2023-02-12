@@ -99,6 +99,7 @@ def crop_recommendation_model(city,season,nitrogen,phosphorus,potassium,ph):
 
 
 def page():
+    try:
         st.title("DataGrow")
         st.markdown("## Making data grow and helping farmers grow")
 
@@ -168,5 +169,6 @@ def page():
             st.markdown(hide_table_row_index, unsafe_allow_html=True)
 
             st.table(df4)
-    
+    except:
+        st.write("No recommendation found for this combination of state, city and season!")
 page()
